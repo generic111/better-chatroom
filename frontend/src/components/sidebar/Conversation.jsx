@@ -1,6 +1,6 @@
 const Conversation = () => {
     return <>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center rounded -2 py-1 cursor-pointer">
             <div className="avatar online">
                 <div className="w-12 rounded-full">
                     <img src="https://avatar.iran.liara.run/public/boy" alt="avatar"/>
@@ -8,8 +8,9 @@ const Conversation = () => {
             </div>
 
             <div className="flex flex-col flex-1">
-                <div>
-                    <p>Darren Chong</p>
+                <div className = 'flex gap-3 justify-between'>
+                    <p className = 'font-bold text-black'>Darren Chong</p>
+                    <span className = 'text-xl'> 💀 </span>
                 </div>
             </div>
         </div>

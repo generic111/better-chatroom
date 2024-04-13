@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Signin = () => {
     return (
         <div>
@@ -25,9 +27,9 @@ const Signin = () => {
                         <input type="password" placeholder="Enter password"/>
                     </div>
 
-                    <a href="#" className="text-blue-600">
+                    <Link to="/signup" className="text-blue-600">
                         Don't have an account? Sign Up
-                    </a>
+                    </Link>
 
                     <div>
                         <button className="btn">Sign In</button>

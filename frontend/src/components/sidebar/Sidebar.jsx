@@ -1,11 +1,12 @@
-import Converstaions from "./Conversations.jsx";
+import Conversations from "./Conversations.jsx";
 import SignOutButton from "./SignOutButton.jsx";
 
 const Sidebar = () => {
     return (
-        <div>
-            <Converstaions />
-            <SignOutButton />
+        <div> 
+            <div className = 'divider px-3'></div>
+            <Conversations /> 
+            <SignOutButton /> 
         </div>
     );
 };

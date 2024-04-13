@@ -1,0 +1,9 @@
+To run go
+```
+cd frontend 
+```
+
+then do
+```
+npm run dev
+```
