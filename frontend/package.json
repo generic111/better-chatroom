@@ -7,7 +7,8 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "set HTTPS=true&&npm run dev"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -20,12 +21,14 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "@vitejs/plugin-react": "^4.2.1",
     "daisyui": "^4.9.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "vite": "^5.2.8"
+    "vite": "^5.2.8",
+    "vite-plugin-mkcert": "^1.17.5"
   }
 }

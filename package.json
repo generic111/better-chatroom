@@ -2,12 +2,14 @@
   "name": "better-chatroom",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon -L backend/server.js"
+    "server": "nodemon -L backend/server.js",
+    "start": "set HTTPS=true&&npm run server"
   },
   "type": "module",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
