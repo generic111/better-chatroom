@@ -32,7 +32,7 @@ const Signup = () => {
                             <span className="text-base label-text">Full Name</span>
                         </label>
 
-                        <input type="text" placeholder="Enter username" 
+                        <input type="text" placeholder="Enter full name" 
                                 value={inputs.fullName} 
                                 onChange={(e) => setInputs({...inputs, fullName: e.target.value})}
                         /> 
@@ -72,7 +72,7 @@ const Signup = () => {
                     </div>
 
                     <div>
-                        <button className="btn">Sign Up</button>
+                        <button className="btn" >Sign Up</button>
                     </div>
                 </form>
                 
