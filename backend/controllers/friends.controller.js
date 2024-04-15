@@ -1,5 +1,6 @@
 import FriendRequest from "../models/friendRequestsModel.js";
 import User from "../models/user.model.js";
+import FriendsList from "../models/friendsList.model.js";
 
 export const sendFriendRequest = async (req, res) => {
     try {
@@ -49,46 +50,66 @@ export const sendFriendRequest = async (req, res) => {
 
 export const acceptFriendRequest = async(req, res) => {
     try {
-        const {senderName, receiverName} = req.body;
-
-        const sender = await User.findOne({username: senderName});
-        const receiver = await User.findOne({username: receiverName});
+        const receiverID = req.user._id;
+        const {senderName} = req.body;
         
-
-        if (!receiver) {
-            return res.status(400).json({error: "User doesn't exist exists"});
-        }
-
-        const exists = await FriendRequest.findOne({
-            sender: sender._id,
-            receiver: receiver._id,
+        const sender = await User.findOne({
+            username: senderName,
         });
 
-        if (exists) {
-            return res.status(400).json({error: "friend request already exists"});
-        };
-
-        const newFriendRequest = await FriendRequest({
-            sender: sender._id,
-            receiver: receiver._id,
+        const receiver = await User.findById({
+            _id: receiverID,
         });
-        
-        if (newFriendRequest) {
-            await newFriendRequest.save();
 
-            res.status(201).json({
-                sender: sender._id,
-                receiver: receiver._id,
+        const friendRequests = await FriendRequest.findOne({
+            sender: sender._id,
+            receiver: receiverID,
+        });
+
+        let friendsListReceive = await FriendsList.findOne({
+            user: receiverID,
+        });
+
+        let friendsListSend = await FriendsList.findOne({
+            user: sender._id,
+        });
+
+        if (!friendsListReceive) {
+            friendsListReceive = await FriendsList.create({
+                user: receiverID,
+                username: receiver.username,
+                members: [],
             });
         }
-        
-        else {
-            return res.status(400).json({error: "Friend request failure"});
+
+        if (!friendsListSend) {
+            friendsListSend = await FriendsList.create({
+                user: sender._id,
+                username: sender.username,
+                members: [],
+            });
         }
+
+        if (friendsListReceive.members.includes(sender._id)) {
+            return res.status(400).json({error: "Friend already exists."});
+        }
+
+        friendsListReceive.members.push(sender._id);
+        friendsListSend.members.push(receiverID);
+
+        await Promise.all([
+            friendsListReceive.save(),
+            friendsListSend.save(),
+        ]);
+
+        return res.status(200).json({
+            user: friendsListReceive.user,
+            list: friendsListReceive.requests,
+        });
 
 
     } catch (error) {
-        console.log("error sending friend request", error.message);
+        console.log("error accepting friend request", error.message);
         res.status(500).json({error: "Internal server error"});
     };
 };
