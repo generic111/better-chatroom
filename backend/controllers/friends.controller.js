@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import FriendsList from "../models/friendsList.model.js";
 
 export const sendFriendRequest = async (req, res) => {
+    console.log("sendFriendRequest")
     try {
         const senderId = req.user._id;
         const {receiverName} = req.body;
@@ -14,22 +15,26 @@ export const sendFriendRequest = async (req, res) => {
             return res.status(400).json({error: "User doesn't exist exists"});
         }
 
-        const exists = await FriendRequest.findOne({
-            sender: senderId,
+        let friendRequests = await FriendRequest.findOne({
             receiver: receiver._id,
         });
 
-        if (exists) {
-            return res.status(400).json({error: "friend request already exists"});
+        if (!friendRequests) {
+            friendRequests = await FriendRequest.create({
+                receiver: receiver._id,
+                username: receiver.username,
+                senders: [],
+            });
         };
 
-        const newFriendRequest = await FriendRequest({
-            sender: senderId,
-            receiver: receiver._id,
-        });
+        if (friendRequests.senders.includes(senderId)) {
+            return res.status(200).json({error: "Friend request already sent."});
+        };
+
+        friendRequests.senders.push(senderId);
         
-        if (newFriendRequest) {
-            await newFriendRequest.save();
+        if (friendRequests) {
+            await friendRequests.save();
 
             res.status(201).json({
                 sender: senderId,
@@ -39,11 +44,45 @@ export const sendFriendRequest = async (req, res) => {
         
         else {
             return res.status(400).json({error: "Friend request failure"});
-        }
+        };
 
 
     } catch (error) {
         console.log("error sending friend request", error.message);
+        res.status(500).json({error: "Internal server error"});
+    };
+};
+
+export const rejectFriendRequest = async(req, res) => {
+    console.log("rejectFriendRequest")
+    try {
+        const receiverID = req.user._id;
+        const {senderName} = req.body;
+        
+        const sender = await User.findOne({
+            username: senderName,
+        });
+
+        const friendRequest = await FriendRequest.findOne({receiver: receiverID});
+
+        if (!friendRequest) {
+            return res.status(400).json({error: "Friend request doesn't exist"});
+        }
+        
+        // console.log(sender._id)
+        // console.log(receiverID)
+        const ret = await FriendRequest.updateOne({
+            receiver: receiverID,
+        }, {
+            $pull: {
+                senders: sender._id,
+            },
+        });
+
+        // console.log(ret);
+        
+    } catch (error) {
+        console.log("error accepting friend request", error.message);
         res.status(500).json({error: "Internal server error"});
     };
 };
@@ -61,10 +100,11 @@ export const acceptFriendRequest = async(req, res) => {
             _id: receiverID,
         });
 
-        const friendRequests = await FriendRequest.findOne({
-            sender: sender._id,
-            receiver: receiverID,
-        });
+        const friendRequest = await FriendRequest.findOne({receiver: receiverID});
+
+        if (!friendRequest) {
+            return res.status(400).json({error: "Friend request doesn't exist"});
+        }
 
         let friendsListReceive = await FriendsList.findOne({
             user: receiverID,
@@ -89,9 +129,19 @@ export const acceptFriendRequest = async(req, res) => {
                 members: [],
             });
         }
-
+        
+        // console.log(sender._id)
+        // console.log(receiverID)
+        await FriendRequest.updateOne({
+            receiver: receiverID,
+        }, {
+            $pull: {
+                senders: sender._id,
+            },
+        });
+        
         if (friendsListReceive.members.includes(sender._id)) {
-            return res.status(400).json({error: "Friend already exists."});
+            return res.status(200).json({error: "Friend already exists."});
         }
 
         friendsListReceive.members.push(sender._id);
@@ -107,6 +157,33 @@ export const acceptFriendRequest = async(req, res) => {
             list: friendsListReceive.requests,
         });
 
+
+    } catch (error) {
+        console.log("error accepting friend request", error.message);
+        res.status(500).json({error: "Internal server error"});
+    };
+};
+
+export const getFriendRequests = async(req, res) => {
+    try {
+        const currentUser = req.user._id;
+        
+        const friendRequests = await FriendRequest.findOne({
+            receiver: currentUser,
+        });
+
+        if (!friendRequests) {
+            return res.status(200).json([]);
+        };
+
+        let users = []
+
+        for (let i = 0; i < friendRequests.senders.length; i++) {
+            users.push(await User.findById(friendRequests.senders[i]));
+        
+        }
+        
+        res.status(200).json(users);
 
     } catch (error) {
         console.log("error accepting friend request", error.message);

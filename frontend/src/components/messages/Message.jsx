@@ -17,6 +17,9 @@ const Message = ({message}) => {
                     <img src="https://avatar.iran.liara.run/public/boy" alt="avatar"/>
                 </div>
             </div>
+            <div className="chat-name">
+                {whoMe ? 'You' : selectedConversation.fullName}    
+            </div>
 
             <div className="chat-bubble text-white bg-blue-500">
                 {message.content}

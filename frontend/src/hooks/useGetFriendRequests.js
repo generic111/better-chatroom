@@ -1,23 +1,23 @@
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
-const useGetConversations = () => {
+const useGetFriendRequests = () => {
 	const [loading, setLoading] = useState(false);
-	const [conversations, setConversations] = useState([]);
-	console.log("here");
+	const [friendRequests, setFriendRequests] = useState([]);
+	console.log("useGetFriendRequests");
 	useEffect(() => { 
-		const getConversations = async () => {
+		const getFriendRequests = async () => {
 			setLoading(true);
 			try {
 				// const res = await fetch("/api/users");
-				const res = await fetch("/api/friends/getFriendsList");
+				const res = await fetch("/api/friends/getFriendRequest");
 				
 				const data = await res.json();
-				// console.log(data);
+				console.log(data);
 				if (data.error) {
 					throw new Error(data.error);
 				}
-				setConversations(data);
+				setFriendRequests(data);
 			} catch (error) {
 				toast.error(error.message);
 			} finally {
@@ -25,10 +25,10 @@ const useGetConversations = () => {
 			}
 		};
 
-		getConversations();
+		getFriendRequests();
 	}, []);
 
-	return {loading, conversations };
+	return {loading, friendRequests };
 };
-export default useGetConversations;
+export default useGetFriendRequests;
 

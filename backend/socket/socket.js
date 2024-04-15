@@ -37,7 +37,9 @@ io.on('connection', (socket) => {
         io.emit("getOnlinePeeps", Object.keys(userSocketMap));
     })
 
-})
+});
+
+// io.on('acceptFriendRequest', (data) => {
 
 
 export {app, io, server}

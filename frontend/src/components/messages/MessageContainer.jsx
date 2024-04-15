@@ -17,7 +17,7 @@ const MessageContainer = () => {
             <>
                 <div className="bg-slate-50 px-4 py-2">
                     <span className="label-text">To:</span>{" "}
-                    <span className="text-black">{!selectedConversation ? "No one selected": selectedConversation.fullName}</span>
+                    <span className="text-black">{!selectedConversation ? "No one selected": selectedConversation.username}</span>
                 </div>
  
                 {!selectedConversation ? (<div></div>) : 

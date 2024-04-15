@@ -11,8 +11,17 @@ export const getFriendsList = async (req, res) => {
 
 
         const friends = await FriendsList.findOne({user: loggedInUserId}) 
+        
+        if (!friends) {
+            return res.status(200).json([]);
+        }
+        let friendsList = []
 
-        res.status(200).json(friends);
+        for (let i = 0; i < friends.members.length; i++) {
+            friendsList.push(await User.findById(friends.members[i]));
+        }
+
+        res.status(200).json(friendsList);
 
     } catch (error) {
         console.log("Error in getFriendsList controller: ", error.message);
