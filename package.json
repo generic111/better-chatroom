@@ -3,7 +3,8 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon -L backend/server.js",
-    "start": "set HTTPS=true&&npm run server"
+    "start": "node backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "type": "module",
   "dependencies": {
