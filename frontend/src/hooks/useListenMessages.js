@@ -19,9 +19,9 @@ const useListenMessages = () => {
 				console.log("Hmac mismatch");
 				return;
 			}
-			
+
 			newMessage.content = CryptoJS.AES.decrypt(newMessage.content, key).toString(CryptoJS.enc.Utf8);
-			console.log(messages);
+			// console.log(messages);
 			setMessages([...messages, newMessage]);
 		});
 

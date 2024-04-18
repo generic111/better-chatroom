@@ -12,7 +12,7 @@ const useSendMessage = () => {
 		const key = "Some hey"
 		const cipher = CryptoJS.AES.encrypt(message, key).toString();
 		const hash = CryptoJS.HmacSHA256(cipher, key).toString();
-		console.log(hash)
+		// console.log(hash)
 
 		try {
 			const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {

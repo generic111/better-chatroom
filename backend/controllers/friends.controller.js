@@ -54,7 +54,7 @@ export const sendFriendRequest = async (req, res) => {
 };
 
 export const rejectFriendRequest = async(req, res) => {
-    console.log("rejectFriendRequest")
+    // console.log("rejectFriendRequest")
     try {
         const receiverID = req.user._id;
         const {senderName} = req.body;

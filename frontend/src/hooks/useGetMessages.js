@@ -11,7 +11,7 @@ const useGetMessages = () => {
 		const getMessages = async (hmac) => {
 			setLoading(true);
 			const key = "Some hey";
-			console.log("here")
+			// console.log("here")
 			try {
 				const res = await fetch(`/api/messages/${selectedConversation._id}`);
 				const data = await res.json();
@@ -20,7 +20,7 @@ const useGetMessages = () => {
 					data_1[i].content = CryptoJS.AES.decrypt(data_1[i].content, key).toString(CryptoJS.enc.Utf8);
 				}
 
-				console.log(data_1);
+				// console.log(data_1);
 				if (data.error) {
                     throw new Error(data.error);
                 }

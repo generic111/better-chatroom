@@ -6,7 +6,7 @@ import FriendRequest from "./FriendRequest.jsx";
 const FriendRequestList = () => {
     
     const {loading, friendRequests} = useGetFriendRequests();
-    console.log("friendRequests ", friendRequests);
+    // console.log("friendRequests ", friendRequests);
 
     return (
         <div className="py-2 flex flex-col overflow-auto">

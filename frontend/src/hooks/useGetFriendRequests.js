@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const useGetFriendRequests = () => {
 	const [loading, setLoading] = useState(false);
 	const [friendRequests, setFriendRequests] = useState([]);
-	console.log("useGetFriendRequests");
+	// console.log("useGetFriendRequests");
 	useEffect(() => { 
 		const getFriendRequests = async () => {
 			setLoading(true);
@@ -13,7 +13,7 @@ const useGetFriendRequests = () => {
 				const res = await fetch("/api/friends/getFriendRequest");
 				
 				const data = await res.json();
-				console.log(data);
+				// console.log(data);
 				if (data.error) {
 					throw new Error(data.error);
 				}
