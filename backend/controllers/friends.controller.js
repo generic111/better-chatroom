@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 import FriendsList from "../models/friendsList.model.js";
 
 export const sendFriendRequest = async (req, res) => {
-    console.log("sendFriendRequest")
+    // console.log("sendFriendRequest")
     try {
         const senderId = req.user._id;
         const {receiverName} = req.body;
