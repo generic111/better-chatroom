@@ -4,7 +4,8 @@ import { getReceiverSocketId, io } from "../socket/socket.js";
 
 export const sendMessage = async (req, res) => {
     try {
-        const {message} = req.body;
+        console.log(req.body)
+        const {message: message, hmac: hmac} = req.body;
         const {id: receiveId} = req.params;
         const senderId = req.user._id;
 
@@ -24,14 +25,12 @@ export const sendMessage = async (req, res) => {
             senderId: senderId,
             receiveId: receiveId,
             content: message,
+            hmac: hmac,
         });
 
         if (newMessage) {
             conversation.messages.push(newMessage._id);
         }
-
-
-
 
         await Promise.all([
             conversation.save(),
@@ -41,11 +40,12 @@ export const sendMessage = async (req, res) => {
         const receiverSocketId = getReceiverSocketId(receiveId);
 
         if (receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", newMessage);  
+            io.to(receiverSocketId).emit("newMessage", newMessage, hmac);  
         }
 
 
-        res.status(201).json(newMessage);
+        res.status(201).json({newMessage: newMessage, hmac: hmac});
+        // res.status(201).json(newMessage);
 
     } catch (error) {
         console.log("Error is sendMessage controller: ", error.message);

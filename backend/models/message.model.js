@@ -15,6 +15,10 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    hmac: {
+        type: String,
+        required: true,
+    }
 }, {timestamps: true});
 
 const Message = mongoose.model("Message", messageSchema);

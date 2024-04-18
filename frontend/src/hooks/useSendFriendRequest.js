@@ -18,9 +18,11 @@ const useSendFriendRequest = () => {
             if (data.error) {
                 throw new Error(data.error);
             }
+            toast.success("Friend request sent");
         } catch (error) {
             toast.error(error.message);
         } finally {
+            
             setLoading(false);
         }
         

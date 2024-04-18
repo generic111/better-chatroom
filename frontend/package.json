@@ -11,6 +11,7 @@
     "start": "set HTTPS=true&&npm run dev"
   },
   "dependencies": {
+    "crypto-js": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
@@ -20,7 +21,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-basic-ssl": "^1.1.0",

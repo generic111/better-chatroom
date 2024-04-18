@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import CryptoJS from "crypto-js";
 
 
 const useSignup = () => {
@@ -10,14 +11,16 @@ const useSignup = () => {
     const signup = async({fullName, username, password, confirmPassword}) => {
         const yes = handleUserErrors({fullName, username, password, confirmPassword});
         if (!yes) return;
-
+        // const hashed_password = password;
+        const hashed_password = await CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+        const hashed_confirmPassword = await CryptoJS.SHA256(confirmPassword).toString(CryptoJS.enc.Hex);
         setLoading(true);
         try {
 
             const res = await fetch("/api/auth/signup", {
                 method: "POST",  
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({fullName, username, password, confirmPassword,}),
+                body: JSON.stringify({fullName, username, password: hashed_password, confirmPassword: hashed_confirmPassword,}),
             });
 
 

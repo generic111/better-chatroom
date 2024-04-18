@@ -7,6 +7,7 @@ export const signup = async (req, res) => {
         const {fullName, username, password, confirmPassword} = req.body;
 
         if (password !== confirmPassword) {
+            console.log("passwords do not match");
             return res.status(400).json({error: "Password do not match"});
         }
 
@@ -86,6 +87,7 @@ export const signin = async (req, res) => {
         });
 
     } catch (error) {
+        
         console.log("error signing in", error.message);
         res.status(500).json({error: "Internal server error"});
     }
