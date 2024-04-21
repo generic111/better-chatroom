@@ -1,12 +1,23 @@
 import FriendRequest from "../models/friendRequestsModel.js";
 import User from "../models/user.model.js";
 import FriendsList from "../models/friendsList.model.js";
+import {body, matchedData, validationResult} from "express-validator";
 
 export const sendFriendRequest = async (req, res) => {
     // console.log("sendFriendRequest")
     try {
+        const errors = validationResult(req);
+
         const senderId = req.user._id;
         const {receiverName} = req.body;
+
+        if (errors.isEmpty()) {
+            const {receiverName} = matchedData(req);
+        }
+
+        else {
+            return res.status(400).json({error: "XSS attack detected"});
+        }
 
         const receiver = await User.findOne({username: receiverName});
         

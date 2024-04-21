@@ -9,6 +9,16 @@ export const sendMessage = async (req, res) => {
         const {id: receiveId} = req.params;
         const senderId = req.user._id;
 
+        const errors = validationResult(req);
+
+        if (errors.isEmpty()) { 
+            const {message: message, hmac: hmac} = matchedData(req);
+        }
+
+        else {
+            return res.status(400).json({error: "XSS attack detected"});
+        }
+
         let conversation = await Conversation.findOne({
             members: {
                 $all: [senderId, receiveId],
