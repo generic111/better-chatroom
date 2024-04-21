@@ -1,6 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { getReceiverSocketId, io } from "../socket/socket.js";
+import { matchedData, validationResult } from "express-validator";
 
 export const sendMessage = async (req, res) => {
     try {
@@ -53,7 +54,7 @@ export const sendMessage = async (req, res) => {
             io.to(receiverSocketId).emit("newMessage", newMessage, hmac);  
         }
 
-
+        console.log("new message", newMessage);
         res.status(201).json({newMessage: newMessage, hmac: hmac});
         // res.status(201).json(newMessage);
 

@@ -1,21 +1,23 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import generateJWTToken from "../utils/generateJWTToken.js";
-import {body, matchedData, validationResult} from "express-validator";
+import { matchedData, validationResult } from "express-validator";
 
 export const signup = async (req, res) => {
     try {
+        const error = validationResult(req);
 
-        const errors = validationResult(req);
         const {fullName, username, password, confirmPassword} = req.body;
 
-        if (errors.isEmpty()) {
+        if (error.isEmpty()) {
             const {fullName, username, password, confirmPassword} = matchedData(req);
+            console.log("matched data", fullName, username, password, confirmPassword);
         }
 
         else {
             return res.status(400).json({error: "XSS attack detected"});
         }
+
 
         if (password !== confirmPassword) {
             console.log("passwords do not match");
@@ -79,17 +81,7 @@ export const signout = (req, res) => {
 
 export const signin = async (req, res) => {
     try {
-
-        const errors = validationResult(req);
         const {username, password} = req.body;
-
-        if (errors.isEmpty()) {
-            const {username, password} = req.body;
-        }
-
-        else {
-            return res.status(400).json({error: "XSS attack detected"});
-        }
 
         const user = await User.findOne({username});
         const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");

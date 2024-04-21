@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useConversation from "../store/useConversation";
 import CryptoJS from "crypto-js";
+import { body } from "express-validator";
+import { key } from "../assets/key";
 
 const useGetMessages = () => {
 	const [loading, setLoading] = useState(false);
@@ -10,7 +12,7 @@ const useGetMessages = () => {
 	useEffect(() => {
 		const getMessages = async (hmac) => {
 			setLoading(true);
-			const key = "Some hey";
+
 			// console.log("here")
 			try {
 				const res = await fetch(`/api/messages/${selectedConversation._id}`);

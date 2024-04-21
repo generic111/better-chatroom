@@ -2,10 +2,13 @@ import express from "express";
 import protectRoute from "../middleware/protectRoute.js";
 import { acceptFriendRequest, sendFriendRequest, getFriendRequests, rejectFriendRequest } from "../controllers/friends.controller.js";
 import { getFriendsList } from "../controllers/user.controller.js";
+import { body } from "express-validator";
 
 const router = express.Router();
 
-router.post("/sendFriendRequest", protectRoute, sendFriendRequest);
+router.post("/sendFriendRequest", protectRoute, [
+    body('receiverName').trim().escape(),
+], sendFriendRequest);
 router.post("/acceptFriendRequest", protectRoute, acceptFriendRequest);
 router.post("/rejectFriendRequest", protectRoute, rejectFriendRequest);
 router.get("/getFriendRequest", protectRoute, getFriendRequests);

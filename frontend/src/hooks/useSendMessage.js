@@ -2,15 +2,19 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import useConversation from "../store/useConversation";
 import CryptoJS from "crypto-js";
+import validator from "validator";
+import { key } from "../assets/key";
 
 const useSendMessage = () => {
 	const [loading, setLoading] = useState(false);
 	const { messages, setMessages, selectedConversation } = useConversation();
 
+
 	const sendMessage = async (message) => {
 		setLoading(true);
-		const key = "Some hey"
-		const cipher = CryptoJS.AES.encrypt(message, key).toString();
+		
+		const filtered = validator.escape(message);
+		const cipher = CryptoJS.AES.encrypt(filtered, key).toString();
 		const hash = CryptoJS.HmacSHA256(cipher, key).toString();
 		// console.log(hash)
 
