@@ -12,7 +12,6 @@ const useSendMessage = () => {
 
 	const sendMessage = async (message) => {
 		setLoading(true);
-		
 		const filtered = validator.escape(message);
 		const cipher = CryptoJS.AES.encrypt(filtered, key).toString();
 		const hash = CryptoJS.HmacSHA256(cipher, key).toString();
