@@ -13,8 +13,8 @@ const useSendMessage = () => {
 	const sendMessage = async (message) => {
 		setLoading(true);
 		const filtered = validator.escape(message);
-		const cipher = CryptoJS.AES.encrypt(JSON.stringify(filtered), key).toString();
-		const hash = CryptoJS.HmacSHA256(JSON.stringify(cipher), key).toString();
+		const cipher = CryptoJS.AES.encrypt(JSON.stringify(filtered), key).toString(CryptoJS.enc.Utf8);
+		const hash = CryptoJS.HmacSHA256(JSON.stringify(cipher), key).toString(CryptoJS.enc.Utf8);
 		// console.log(hash)
 
 		try {
