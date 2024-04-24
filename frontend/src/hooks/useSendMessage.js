@@ -13,8 +13,9 @@ const useSendMessage = () => {
 	const sendMessage = async (message) => {
 		setLoading(true);
 		const filtered = validator.escape(message);
-		const cipher = CryptoJS.AES.encrypt(JSON.stringify(filtered), key).toString(CryptoJS.enc.Utf8);
-		const hash = CryptoJS.HmacSHA256(JSON.stringify(cipher), key).toString(CryptoJS.enc.Utf8);
+		let content = CryptoJS.Base64.parse(filtered).toString(CryptoJS.enc.Utf8);
+		const cipher = CryptoJS.AES.encrypt(JSON.stringify(content), key).toString(CryptoJS.enc.Utf8);
+		const hash = CryptoJS.HmacSHA256(cipher, key).toString(CryptoJS.enc.Utf8);
 		// console.log(hash)
 
 		try {
@@ -31,7 +32,8 @@ const useSendMessage = () => {
 
 			let data = await res.json();
 			const content = data['newMessage'];
-			content.content = CryptoJS.AES.decrypt(JSON.stringify(content.content), key).toString(CryptoJS.enc.Utf8);
+			let c = CryptoJS.enc.Base64.parse(content.content).toString(CryptoJS.enc.Utf8);
+			content.content = CryptoJS.AES.decrypt(c, key).toString(CryptoJS.enc.Utf8);
 
 			if (data.error) {
                 throw new Error(data.error);
