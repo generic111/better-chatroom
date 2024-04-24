@@ -31,7 +31,7 @@ const useSendMessage = () => {
 
 			let data = await res.json();
 			const content = data['newMessage'];
-			content.content = CryptoJS.AES.decrypt(content.content, key).toString(CryptoJS.enc.Utf8);
+			content.content = CryptoJS.AES.decrypt(JSON.stringify(content.content), key).toString(CryptoJS.enc.Utf8);
 
 			if (data.error) {
                 throw new Error(data.error);

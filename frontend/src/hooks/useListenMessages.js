@@ -16,13 +16,13 @@ const useListenMessages = () => {
 			// 	messages[i].content = CryptoJS.AES.decrypt(messages[i].content, key).toString(CryptoJS.enc.Utf8);
 			// }
 			// console.log(newMessage.content)
-			const hash = CryptoJS.HmacSHA256(newMessage.content, key).toString(CryptoJS.enc.Utf8);
+			const hash = CryptoJS.HmacSHA256(JSON.stringify(newMessage.content), key).toString(CryptoJS.enc.Utf8);
 			if (hash !== hmac) {
 				console.log("Hmac mismatch");
 				return;
 			}
 
-			newMessage.content = CryptoJS.AES.decrypt(newMessage.content, key).toString(CryptoJS.enc.Utf8);
+			newMessage.content = CryptoJS.AES.decrypt(JSON.stringify(newMessage.content), key).toString(CryptoJS.enc.Utf8);
 			// console.log(messages);
 			setMessages([...messages, newMessage]);
 		});
