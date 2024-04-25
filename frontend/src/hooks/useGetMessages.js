@@ -20,12 +20,13 @@ const useGetMessages = () => {
 				const data = await res.json();
 				let data_1 = data;
 				for (let i = 0; i < data.length; i++) {
+					const hash = CryptoJS.HmacSHA256(data_1[i].content, key).toString();
 					data_1[i].content = decrypt(data_1[i].content, key);
-					const hash = CryptoJS.HmacSHA256(data_1[i].hmac, key).toString();
+					
 					if (hash != data_1[i].hmac) {
 						console.log("Hmac mismatch");
-						console.log(data_1[i].hmac);
-						console.log(hash);
+						// console.log(data_1[i].hmac);
+						// console.log(hash);
 						return;
 					}
 				}

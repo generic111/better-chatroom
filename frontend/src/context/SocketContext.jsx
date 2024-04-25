@@ -12,8 +12,8 @@ export const SocketContextProvider = ({ children }) => {
 	const [socket, setSocket] = useState(null);
 	const [onlinePeeps, setOnlinePeeps] = useState([]);
 	const { authUser } = useAuthContext();
-	// const url = "http://localhost:8000";
-	const url = "https://better-chatroom.onrender.com";
+	const url = "http://localhost:8000";
+	// const url = "https://better-chatroom.onrender.com";
 	useEffect(() => {
 		if (authUser) {
 			const socket = io(url, {
