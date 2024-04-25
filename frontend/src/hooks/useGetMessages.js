@@ -4,6 +4,7 @@ import useConversation from "../store/useConversation";
 import CryptoJS from "crypto-js";
 import { body } from "express-validator";
 import { key } from "../assets/key";
+import { decrypt } from "../util/encryption";
 
 const useGetMessages = () => {
 	const [loading, setLoading] = useState(false);
@@ -19,9 +20,8 @@ const useGetMessages = () => {
 				const data = await res.json();
 				let data_1 = data;
 				for (let i = 0; i < data.length; i++) {
-					let content = CryptoJS.enc.Base64.parse(data_1[i].content).toString(CryptoJS.enc.Utf8);
-					data_1[i].content = CryptoJS.AES.decrypt(content, key).toString(CryptoJS.enc.Utf8);
-					const hash = CryptoJS.HmacSHA256(data_1[i].hmac, key).toString(CryptoJS.enc.Utf8);
+					data_1[i].content = decrypt(data_1[i].content, key);
+					const hash = CryptoJS.HmacSHA256(data_1[i].hmac, key).toString();
 					if (hash !== data_1[i].hmac) {
 						console.log("Hmac mismatch");
 						return;

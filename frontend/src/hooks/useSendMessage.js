@@ -4,6 +4,7 @@ import useConversation from "../store/useConversation";
 import CryptoJS from "crypto-js";
 import validator from "validator";
 import { key } from "../assets/key";
+import { encrypt, decrypt } from "../util/encryption";
 
 const useSendMessage = () => {
 	const [loading, setLoading] = useState(false);
@@ -13,9 +14,10 @@ const useSendMessage = () => {
 	const sendMessage = async (message) => {
 		setLoading(true);
 		const filtered = validator.escape(message);
-		let content = CryptoJS.Base64.parse(filtered).toString(CryptoJS.enc.Utf8);
-		const cipher = CryptoJS.AES.encrypt(JSON.stringify(content), key).toString(CryptoJS.enc.Utf8);
-		const hash = CryptoJS.HmacSHA256(cipher, key).toString(CryptoJS.enc.Utf8);
+
+		const cipher = encrypt(filtered, key);
+		console.log(cipher);
+		const hash = CryptoJS.HmacSHA256(cipher, key).toString();
 		// console.log(hash)
 
 		try {
@@ -32,8 +34,7 @@ const useSendMessage = () => {
 
 			let data = await res.json();
 			const content = data['newMessage'];
-			let c = CryptoJS.enc.Base64.parse(content.content).toString(CryptoJS.enc.Utf8);
-			content.content = CryptoJS.AES.decrypt(c, key).toString(CryptoJS.enc.Utf8);
+			content.content = decrypt(content.content, key);
 
 			if (data.error) {
                 throw new Error(data.error);
