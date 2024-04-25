@@ -22,7 +22,7 @@ const useGetMessages = () => {
 				for (let i = 0; i < data.length; i++) {
 					data_1[i].content = decrypt(data_1[i].content, key);
 					const hash = CryptoJS.HmacSHA256(data_1[i].hmac, key).toString();
-					if (hash !== data_1[i].hmac) {
+					if (hash != data_1[i].hmac) {
 						console.log("Hmac mismatch");
 						return;
 					}

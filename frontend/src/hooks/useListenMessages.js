@@ -18,7 +18,7 @@ const useListenMessages = () => {
 			// }
 			// console.log(newMessage.content)
 			const hash = CryptoJS.HmacSHA256(newMessage.content, key).toString();
-			if (hash !== hmac) {
+			if (hash != hmac) {
 				console.log("Hmac mismatch");
 				return;
 			}
