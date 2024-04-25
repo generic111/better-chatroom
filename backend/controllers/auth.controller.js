@@ -11,7 +11,7 @@ export const signup = async (req, res) => {
 
         if (error.isEmpty()) {
             const {fullName, username, password, confirmPassword} = matchedData(req);
-            console.log("matched data", fullName, username, password, confirmPassword);
+            // console.log("matched data", fullName, username, password, confirmPassword);
         }
 
         else {

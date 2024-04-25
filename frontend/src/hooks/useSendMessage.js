@@ -16,10 +16,7 @@ const useSendMessage = () => {
 		const filtered = validator.escape(message);
 
 		const cipher = encrypt(filtered, key);
-		console.log(cipher);
 		const hash = CryptoJS.HmacSHA256(cipher, key).toString();
-		console.log("sending")
-		console.log(hash)
 
 		try {
 			const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
