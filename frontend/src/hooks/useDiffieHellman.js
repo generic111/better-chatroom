@@ -42,5 +42,6 @@ const useDiffieHellman = () => {
     
     return sendPublicKey;
 };
+
 export default useDiffieHellman;
 
