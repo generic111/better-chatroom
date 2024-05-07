@@ -19,10 +19,10 @@ const Signup = () => {
     };
 
     return (
-        <div>
+        <div className="flex justify-center">
 
-            <div className="w-full p-6 bg-gray-200 rounded-lg">
-                <h1>
+            <div className="flex flex-col w-1/4 justify-start p-6 bg-gray-200 rounded-lg my-20">
+                <h1 className="flex justify-center">
                     Sign Up
                     <span className="text-blue-600"> ChatApp</span>
                 </h1>

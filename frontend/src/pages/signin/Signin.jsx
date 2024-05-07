@@ -15,8 +15,8 @@ const Signin = () => {
     }
 
     return (
-        <div>
-            <div className="w-full p-6 bg-gray-200 rounded-lg">
+        <div className="flex justify-center">
+            <div className="w-1/4 justify-center item-center p-6 bg-gray-200 rounded-lg my-20">
                 <h1>
                     Sign In
 

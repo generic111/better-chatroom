@@ -6,11 +6,15 @@ import { Navigate, Route, Routes, useActionData } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useAuthContext } from './context/AuthContext';
 import Forum from './pages/forum/ForumHome.jsx';
+import NavBar from './pages/homepage/NavBar.jsx';
 
 function App() {
   const {authUser} = useAuthContext();
   return (
-    <div className='h-screen flex items-center justify-center'>
+    <div className='h-screen items-center justify-center'>
+      <div className='top-0'>
+        <NavBar />
+      </div>
       {/* <Signin /> */}
       {/* <Signup /> */}
       {/* <Home /> */}
