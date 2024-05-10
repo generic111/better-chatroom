@@ -15,12 +15,14 @@ const Signin = () => {
     }
 
     return (
-        <div className="flex justify-center">
-            <div className="w-1/4 justify-center item-center p-6 bg-gray-200 rounded-lg my-20">
-                <h1>
+        <div className="flex flex-col items-center justify-center mx-auto p-2">
+            <div className="w-1/4 justify-center item-center p-6 bg-gray-300 rounded-md my-20 
+                shadow-md backdrop-filter backdrop-blur-lg bg-opacity-50 border border-gray-100">
+            {/* < div className = "w-1/4 justify-center item-center bg-gray-300 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-50 border border-gray-100"> */}
+            
+                <h1 className="text-black p-2 text-2xl">
                     Sign In
-
-                    <span className="text-blue-600"> ChatApp</span>
+                    <span className="text-blue-600 p-2"> ChatApp</span>
                 </h1>
 
                 <form onSubmit={handleUserData}>
@@ -29,7 +31,7 @@ const Signin = () => {
                             <span className="text-base label-text">Username</span>
                         </label>
 
-                        <input type="text" placeholder="Enter username"
+                        <input type="text" placeholder="Enter username" className="w-full input input-bordered h-10"
                             value = {username} onChange = {(e) => setUsername(e.target.value)}/>
                     </div>
 
@@ -38,7 +40,7 @@ const Signin = () => {
                             <span className="text-base label-text">Password</span>
                         </label>
 
-                        <input type="password" placeholder="Enter password"
+                        <input type="password" placeholder="Enter password" className="w-full input input-bordered h-10"
                             value = {password} onChange = {(e) => setPassword(e.target.value)}/>
                     </div>
 
