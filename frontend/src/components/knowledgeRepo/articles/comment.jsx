@@ -8,7 +8,7 @@ const Comment = ({comment}) => {
                 </div>
             </div>
 
-            <div>
+            <div className="text-black">
                 {comment.content}
             </div>
             {/* <div className="chat-footer flex">12:45</div> */}

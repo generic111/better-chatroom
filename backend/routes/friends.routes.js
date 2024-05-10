@@ -1,6 +1,6 @@
 import express from "express";
 import protectRoute from "../middleware/protectRoute.js";
-import { acceptFriendRequest, sendFriendRequest, getFriendRequests, rejectFriendRequest } from "../controllers/friends.controller.js";
+import { acceptFriendRequest, sendFriendRequest, getFriendRequests, rejectFriendRequest } from "../controllers/chat/friends.controller.js";
 import { getFriendsList } from "../controllers/user.controller.js";
 import { body } from "express-validator";
 

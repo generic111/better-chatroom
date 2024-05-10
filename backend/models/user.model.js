@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength: 8,
     },
+    muted: {
+        type: Boolean,
+        default: false,
+    },
+    role: {
+        type: String,
+        default: "student",
+    },
     profilePic: {
         type: String,
         default: "",

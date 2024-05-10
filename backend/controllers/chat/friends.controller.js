@@ -1,6 +1,6 @@
-import FriendRequest from "../models/friendRequestsModel.js";
-import User from "../models/user.model.js";
-import FriendsList from "../models/friendsList.model.js";
+import FriendRequest from "../../models/friendRequestsModel.js";
+import User from "../../models/user.model.js";
+import FriendsList from "../../models/friendsList.model.js";
 
 export const sendFriendRequest = async (req, res) => {
     // console.log("sendFriendRequest")

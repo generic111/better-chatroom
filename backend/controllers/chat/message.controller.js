@@ -1,6 +1,6 @@
-import Conversation from "../models/conversation.model.js";
-import Message from "../models/message.model.js";
-import { getReceiverSocketId, io } from "../socket/socket.js";
+import Conversation from "../../models/conversation.model.js";
+import Message from "../../models/message.model.js";
+import { getReceiverSocketId, io } from "../../socket/socket.js";
 import { matchedData, validationResult } from "express-validator";
 
 export const sendMessage = async (req, res) => {

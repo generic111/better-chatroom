@@ -1,6 +1,7 @@
 import express from "express";
-import { signup, signin, signout } from "../controllers/auth.controller.js";
+import { signup, signin, signout, muteUser, unmuteUser } from "../controllers/chat/auth.controller.js";
 import {body} from "express-validator";
+import protectRoute from "../middleware/protectRoute.js";
 
 const router = express.Router();
 
@@ -17,5 +18,8 @@ router.post("/signup", [
     body('fullName').trim().escape(),
     body('confirmPassword').trim().escape()
 ], signup);
+
+router.post("/muteUser", protectRoute, muteUser);
+router.post("/unmuteUser", protectRoute, unmuteUser);
 
 export default router;

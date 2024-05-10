@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import friendRoutes from "./routes/friends.routes.js"
+import articleRoutes from "./routes/article.routes.js";
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import { app, server } from "./socket/socket.js"; 
@@ -30,12 +31,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/friends", friendRoutes);
+app.use("/api/articles", articleRoutes);
 
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
+// app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+// });
 
 server.listen(PORT, () => {
     connectToMongoDB();

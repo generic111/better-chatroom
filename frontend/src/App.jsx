@@ -11,7 +11,7 @@ import NavBar from './pages/homepage/NavBar.jsx';
 function App() {
   const {authUser} = useAuthContext();
   return (
-    <div className='h-screen items-center justify-center'>
+    <div className='h-screen items-center justify-center backdrop-blur-lg' id="background">
       <div className='top-0 w-screen'>
         <NavBar user={authUser}/>
       </div>

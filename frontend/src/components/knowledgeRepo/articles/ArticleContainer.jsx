@@ -14,11 +14,11 @@ function ContainerContent({selectedArticle, selectedCreateNewArticle}) {
         return (
             <div className=" flex-col m-auto py-60">
                 <div className="flex justify-center">
-                <MdOutlineArticle size={150} opacity={0.1}/>
+                <MdOutlineArticle size={150} opacity={0.3}/>
                 </div>
 
                 <div className="flex justify-center">
-                    <h1 className="font-bold text-2xl opacity-25">Select an article</h1>
+                    <h1 className="font-bold text-2xl opacity-50">Select an article</h1>
                 </div>
             </div>
         

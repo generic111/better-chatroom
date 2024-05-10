@@ -18,13 +18,13 @@ const ArticleDetails = ({article}) => {
                 </div>
 
                 <div className="flex flex-col justify-center">
-                    <p className = 'text-xl text-red-400'>{selectedArticle.authorName}</p>
+                    <p className = 'text-xl text-red-500'>{selectedArticle.authorName}</p>
                 </div>
 
             </div>
 
             <div className="my-10">
-                <p>{selectedArticle.content}</p>
+                <p className="text-black">{selectedArticle.content}</p>
             </div>
 
             
