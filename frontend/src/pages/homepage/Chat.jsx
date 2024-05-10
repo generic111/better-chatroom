@@ -1,7 +1,6 @@
 import MessageContainer from "../../components/messages/MessageContainer.jsx";
 import Friends from "../../components/friends/Friends.jsx";
 import FriendBar from "../../components/friends/FriendBar.jsx";
-import NavBar from "./NavBar.jsx";
 
 const Chat = () => {
     return (

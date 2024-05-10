@@ -1,10 +1,16 @@
-import NavBar from "../homepage/NavBar";
+import ArticleContainer from "../../components/knowledgeRepo/articles/ArticleContainer.jsx";
+import Articles from "../../components/knowledgeRepo/articles/Articles.jsx";
+import NavBar from "../homepage/NavBar.jsx";
 
 const Forum = () => {
     return (
-        <div className="w-screen h-screen">
-            {/* <NavBar /> */}
-            <h1>Forum</h1>
+        <div className="p-5"> 
+
+            <div className="flex w-full h-full">
+                <Articles />
+                <ArticleContainer />
+                
+            </div>           
         </div>
     );
 };
