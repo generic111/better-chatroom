@@ -12,8 +12,8 @@ function App() {
   const {authUser} = useAuthContext();
   return (
     <div className='h-screen items-center justify-center'>
-      <div className='top-0'>
-        <NavBar />
+      <div className='top-0 w-screen'>
+        <NavBar user={authUser}/>
       </div>
       {/* <Signin /> */}
       {/* <Signup /> */}

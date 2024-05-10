@@ -6,8 +6,11 @@ import { useNavigate } from 'react-router-dom'
 // From tailwind css sample https://tailwindui.com/components/application-ui/navigation/navbars
 
 var navigation = [
-  { name: 'Chat', href: '/'},
-  { name: 'Knowledge Repository', href: '/forum'},
+    
+    { name: 'Chat', href: '/'},
+    { name: 'Knowledge Repository', href: '/forum'},
+    { name: 'Signin', href: '/signin'},
+    { name: 'Signup', href: '/signup'},
 ]
 
 function classNames(...classes) {
@@ -15,11 +18,28 @@ function classNames(...classes) {
 }
 
 
-export default function NavBar() {
-    const [name, setName] = useState("Chat");
+export default function NavBar(user) {
+
+
+    const [name, setName] = useState("");
+    const [profilePic, setProfilePic] = useState("https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80");
+
     const navigate = useNavigate();
 
-    
+    function handleClick(name) {
+        if (!user.user && name != "Signup") {
+            setName("Signin");
+            return;
+        }
+
+        else if (user.user && (name == "Signin" || name == "Signup")) {
+            return;
+        }
+        else {
+            setName(name);
+            setProfilePic(user.user.profilePic);
+        }
+    };
 
     useEffect(() => {console.log(name);}, [name]);
   return (
@@ -44,7 +64,7 @@ export default function NavBar() {
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <a
-                        onClick={() => {setName(item.name); navigate(item.href);}}
+                        onClick={() => {handleClick(item.name); navigate(item.href);}}
                         key={item.name}
                         className={classNames(
                             item.name === name ? 'bg-gray-900 text-white cursor-pointer' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
