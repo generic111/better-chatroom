@@ -220,9 +220,6 @@ export const deleteFriend = async (req, res) => {
             user: sender._id,
         });
 
-        console.log("hello");
-        console.log(friendsListReceive);
-        console.log(friendsListSend);
 
         if (!friendsListReceive.members.includes(sender._id) || !friendsListSend.members.includes(receiver._id)) {
             return res.status(200).json({error: "Not a Friend"});
@@ -236,12 +233,7 @@ export const deleteFriend = async (req, res) => {
         friendsListReceive.members.splice(indexSender, 1);
         friendsListSend.members.splice(indexReciever, 1);
 
-        console.log("after remoce");
-        console.log(friendsListReceive);
-        console.log(friendsListSend);
-
         // remove conversations from these friends 
-
         let conversation1 = await Conversation.findOne({
             members: [sender._id, receiver._id]
         });
@@ -249,37 +241,18 @@ export const deleteFriend = async (req, res) => {
         let conversation2 = await Conversation.findOne({
             members: [receiver._id, sender._id]
         });
-
-        console.log("CONVERSTAIONS")
-        console.log(conversation1);
-        console.log(conversation2);
         
         let convo = conversation1 ? conversation1 : conversation2;
-        
-        // if (conversation1 || conversation2) {
 
-        //     if (conversation1) {
-        //         conversation1.messages = [];
-        //         // conversation1.save();
-        //     } else if (conversation2) {
-        //         conversation2.messages = [];
-        //         // conversation2.save();
-
-        //     }
-        // }
-        convo.messages = [];
-
+        if (convo) {
+            convo.messages = [];
+            convo.save();
+        }
 
         await Promise.all([
             friendsListReceive.save(),
             friendsListSend.save(),
-            convo.save(),
         ]);
-        
-        console.log("after");
-        console.log(friendsListReceive);
-        console.log(friendsListSend);
-        console.log(convo);
 
         return res.status(200).json({
             user: friendsListReceive.user,
