@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const useGetConversations = () => {
 	const [loading, setLoading] = useState(false);
 	const [conversations, setConversations] = useState([]);
-	console.log("here");
+	// console.log("here");
 	useEffect(() => { 
 		const getConversations = async () => {
 			setLoading(true);

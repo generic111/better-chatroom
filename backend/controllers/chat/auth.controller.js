@@ -94,6 +94,7 @@ export const signin = async (req, res) => {
 
         res.status(200).json({
             _id: user._id,
+            role: user.role,
             fullName: user.fullName,
             username: user.username,
             profilePic: user.profilePic,

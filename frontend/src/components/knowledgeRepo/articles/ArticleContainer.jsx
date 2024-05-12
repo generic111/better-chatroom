@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useArticle from "../../../store/useArticle";
 import ArticleDetails from "./ArticleDetails.jsx";
-import useCreateArticle from "../../../store/useCreateArticle.js";
+import useCreateArticle from "../../../store/useCreateArticlePage.js";
 import CreateNewArticle from "./CreateNewArticle.jsx";
 import { MdOutlineArticle } from "react-icons/md";
 import Comments from "./Comments.jsx";
@@ -26,10 +26,11 @@ function ContainerContent({selectedArticle, selectedCreateNewArticle}) {
     }
     else if (selectedArticle) {
         return (
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-auto">
                 <ArticleDetails />
-                <Comments />
                 <CommentInput />
+                <Comments />
+                
             </div>
         );
     }

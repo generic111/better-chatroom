@@ -7,7 +7,7 @@ const useGetComments = () => {
 	const { comments, setComments, selectedArticle } = useArticle();
 
 	useEffect(() => {
-		const getComments = async (hmac) => {
+		const getComments = async () => {
 			setLoading(true);
 
 			try {

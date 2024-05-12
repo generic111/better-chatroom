@@ -18,7 +18,7 @@ const CommentInput = () => {
     return (
         <div>
             <form onSubmit={submitFunc}>
-                <div className = 'w-full relative'>
+                <div className = 'w-full relative pr-20'>
                     <input 
                         type = 'text' 
                         className = 'border text-sm rounded-lg block w-full p-2.5'
@@ -26,7 +26,7 @@ const CommentInput = () => {
                         value = {comment}
                         onChange={(e) => setComment(e.target.value)}
                     />
-                    <button type = 'submit' className="absolute inset-y-0 end-0 flex items-center pe-3">
+                    <button type = 'submit' className="absolute inset-y-0 end-0 flex items-center pe-24">
                         <BsSend/>
                     </button>
                 </div>

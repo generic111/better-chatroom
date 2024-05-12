@@ -1,8 +1,9 @@
 
 import Article from "./Article.jsx";
 import useGetArticles from "../../../hooks/useGetArticles";
-import useCreateArticle from "../../../store/useCreateArticle";
+import useCreateArticle from "../../../store/useCreateArticlePage.js";
 import useArticle from "../../../store/useArticle";
+import useListenArticles from "../../../hooks/useListenArticles.js";
 
 const Articles = () => {
 
@@ -10,6 +11,8 @@ const Articles = () => {
     const {selectedArticle, setSelectedArticle} = useArticle();
     const {selectedCreateNewArticle, setSelectedCreateNewArticle} = useCreateArticle();
     // console.log("yahhh ", conversations);
+
+    useListenArticles();
 
     return (
         <div className="pt-5 flex flex-col w-1/5">

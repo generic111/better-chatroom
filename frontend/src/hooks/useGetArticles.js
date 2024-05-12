@@ -1,11 +1,13 @@
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import useArticles from "../store/useArticles";
 
 const useGetArticles = () => {
 	const [loading, setLoading] = useState(false);
-	const [articles, setArticles] = useState([]);
+	// const [articles, setArticles] = useState([]);
+    const { articles, setArticles } = useArticles();
 
-	console.log("here");
+	// console.log("here");
 
 	useEffect(() => { 
 		const getArticle = async () => {
@@ -26,9 +28,9 @@ const useGetArticles = () => {
 				setLoading(false);
 			}
 		};
-
+        
 		getArticle();
-	}, []);
+	}, [setArticles]);
 
 	return {loading, articles };
 };

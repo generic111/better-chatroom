@@ -6,13 +6,16 @@ import Comment from "../../models/comment.model.js";
 export const createArticle = async (req, res) => {
     try {
         
-        const {username, title, content} = req.body;
+        const {title, content} = req.body;
+        const userId = req.user._id;
 
-        const user = await User.findOne({username});
+        const user = await User.findById(userId);
 
         const newArticle = await Article({
-            authorName: username,
+            authorName: user.username,
+            authorFullName: user.fullName,
             authorId: user._id,
+            authorRole: user.role,
             title: title,
             content: content,
         
@@ -28,7 +31,7 @@ export const createArticle = async (req, res) => {
         }
 
     } catch (error) {
-        console.log("error creating article up", error.message);
+        console.log("error creating article", error.message);
         res.status(500).json({error: "Internal server error"});
     };
 };

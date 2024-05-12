@@ -12,8 +12,8 @@ const Home = () => {
     const {authUser} = useAuthContext();
     return (
         <div>
-            <div className="w-screen h-screen py-20 flex items-center justify-center mx-autobg-gray-300 rounded-md
-                shadow-md backdrop-filter">
+            <div className="w-full h-full py-20 flex items-center justify-center mx-autobg-gray-300 rounded-md
+                \backdrop-filter">
 
                 {/* <NavBar /> */}
 

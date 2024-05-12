@@ -1,6 +1,7 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../store/useConversation";
 
+
 const Conversation = ({conversation}) => {
 
     const {selectedConversation, setSelectedConversation} = useConversation();
@@ -17,7 +18,6 @@ const Conversation = ({conversation}) => {
             <div className={`avatar ${isOnline ? "online" : ""}`}>
                 <div className="w-12 rounded-full">
                     <img src={`https://avatar.iran.liara.run/public/boy?username=${conversation.fullName}`} alt='user avatar' />
-                    {/* <img src="https://avatar.iran.liara.run/public/boy" alt="avatar"/> */}
                 </div>
             </div>
 
