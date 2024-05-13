@@ -15,7 +15,7 @@ export const comment = async (req, res) => {
 
         const newComment = await Comment({
             autherName: user.username,
-            autherFullName: user.fullName,
+            authorFullName: user.fullName,
             authorId: user._id,
             authorRole: user.role,
             content: comment,
