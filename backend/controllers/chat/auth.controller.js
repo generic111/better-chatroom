@@ -108,6 +108,7 @@ export const signin = async (req, res) => {
 };
 
 export const muteUser = async (req, res) => {
+    // console.log("here");
     try {
         const {username} = req.body;
 

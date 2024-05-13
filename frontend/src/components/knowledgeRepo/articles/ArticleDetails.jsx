@@ -1,12 +1,15 @@
 import useDeleteArticle from "../../../hooks/useDeleteArticle";
 import useArticle from "../../../store/useArticle";
 import { useAuthContext } from "../../../context/AuthContext";
+import useCreateArticlePage from "../../../store/useCreateArticlePage";
+import toast from "react-hot-toast";
 
 const ArticleDetails = ({article}) => {
 
     const {selectedArticle, setSelectedArticle } = useArticle();
     const {deleteArticle} = useDeleteArticle();
     const {authUser} = useAuthContext();
+    const {selectedEditArticle, setSelectedEditArticle, setSelectedCreateNewArticle} = useCreateArticlePage();
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -16,7 +19,25 @@ const ArticleDetails = ({article}) => {
             return;
         }
         console.log(ret);
+    }
+    
+    const handleEdit = async (e) => {
+        e.preventDefault();
+
+        if (authUser.role === "admin" || selectedArticle.authorName === authUser.username) {
+            setSelectedEditArticle(selectedArticle);
+            setSelectedCreateNewArticle(null);
+        }
+
+        else {
+            toast.error("You are not authorized to edit this article");
+        }
+        // setSelectedArticle(null);
+        // console.log(ret);
     }   
+
+
+    
 
     const profilePic = `https://avatar.iran.liara.run/username?username=${selectedArticle.authorFullName}`;
 
@@ -51,7 +72,7 @@ const ArticleDetails = ({article}) => {
 
             <div className="flex mb-10 mt-5">
                 <div className="mr-5">
-                    <label className="items-center cursor-pointer text-blue-100 text-sm">
+                    <label className="items-center cursor-pointer text-blue-100 text-sm" onClick={handleEdit}>
                         Edit
                     </label>
                 </div>

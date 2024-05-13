@@ -1,15 +1,17 @@
+import useCreateArticlePage from "../../../store/useCreateArticlePage";
 import useArticle from "../../../store/useArticle";
 
 const Article = ({article}) => {
 
     const {selectedArticle, setSelectedArticle} = useArticle();
+    const {setSelectedEditArticle} = useCreateArticlePage();
 
     const isSelected = selectedArticle?._id === article._id;
     // console.log(article);
 
     return (<>
         <div className={"flex gap-2 items-center rounded -2 py-2 cursor-pointer"}
-                onClick={() => setSelectedArticle(article)}> 
+                onClick={() => {setSelectedArticle(article); setSelectedEditArticle(null);}}> 
 
             <div className="flex flex-col flex-1">
                 <div className = 'flex gap-3 justify-between'>

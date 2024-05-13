@@ -4,6 +4,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../context/AuthContext'
 import useProfilePic from '../../store/useProfilePic'
+import useSignout from '../../hooks/useSignout'
 
 // From tailwind css sample https://tailwindui.com/components/application-ui/navigation/navbars
 
@@ -22,9 +23,10 @@ export default function NavBar(user) {
 
 
     const [name, setName] = useState("");
-    const {profilePic, setProfilePic} = useProfilePic();
+    const {profilePic} = useProfilePic();
     const {authUser} = useAuthContext();
-
+    const {loading, signout} = useSignout();
+    // console.log(profilePic)
     const navigate = useNavigate();
 
     function handleClick(name) {
@@ -112,16 +114,6 @@ export default function NavBar(user) {
                             onClick={() => {navigate('/account');}}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
                             Settings
                           </a>
                         )}
@@ -129,7 +121,7 @@ export default function NavBar(user) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => {signout();}}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

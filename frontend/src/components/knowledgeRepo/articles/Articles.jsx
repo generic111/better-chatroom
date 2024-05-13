@@ -9,7 +9,7 @@ const Articles = () => {
 
     const {loading, articles} = useGetArticles();
     const {selectedArticle, setSelectedArticle} = useArticle();
-    const {selectedCreateNewArticle, setSelectedCreateNewArticle} = useCreateArticle();
+    const {selectedCreateNewArticle, setSelectedEditArticle, setSelectedCreateNewArticle} = useCreateArticle();
     // console.log("yahhh ", conversations);
 
     useListenArticles();
@@ -18,7 +18,7 @@ const Articles = () => {
         <div className="pt-5 flex flex-col w-1/5">
             <div className="flex justify-center mb-5">
                 <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
-                onClick={() => {setSelectedCreateNewArticle(true); setSelectedArticle(null);}}>
+                onClick={() => {setSelectedCreateNewArticle(true); setSelectedArticle(null); setSelectedEditArticle(null);}}>
                     Create Article
                 </button>
             </div>

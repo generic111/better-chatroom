@@ -76,17 +76,14 @@ export const editArticle = async (req, res) => {
         const article = await Article.findById(articleId);
         const user = await User.findById(userId);
 
-        if (article.authorId != req.user._id && user.role != "staff") {
-            return res.status(401).json({error: "Unauthorized article edit attempt"});
-        }
-
         const ret = await Article.findOneAndUpdate(
             { _id: articleId }, 
             { title: title, content: content },
             { new: true }
         );
 
-        res.status(200).json(ret);
+        const articles = await Article.find({}).populate("commentList");
+        res.status(200).json(articles);
 
     } catch (error) {
         console.log("error editing article", error.message);

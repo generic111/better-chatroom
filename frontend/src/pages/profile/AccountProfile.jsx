@@ -1,4 +1,6 @@
 
+import ChangePassword from "../../components/settings/ChangePassword.jsx";
+import MuteUsers from "../../components/settings/MuteUsers.jsx";
 import { useAuthContext } from "../../context/AuthContext.jsx";
 
 const AccountProfile = () => {
@@ -28,7 +30,11 @@ const AccountProfile = () => {
 
                 </div>
                 
-            </div>           
+            </div> 
+
+            <ChangePassword />       
+
+            <MuteUsers />
         </div>
     );
 };
