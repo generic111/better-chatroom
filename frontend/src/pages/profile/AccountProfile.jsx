@@ -34,7 +34,8 @@ const AccountProfile = () => {
 
             <ChangePassword />       
 
-            <MuteUsers />
+            {authUser.role === "admin" && <MuteUsers />}
+            
         </div>
     );
 };

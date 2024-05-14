@@ -10,6 +10,7 @@ const User = ({user}) => {
 
         setMuted(e.target.value)
         toggleMuteUser(user, muted);
+        user.muted = !muted;
         setMuted(!muted);
     }
 

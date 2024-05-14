@@ -4,6 +4,8 @@ import useGetArticles from "../../../hooks/useGetArticles";
 import useCreateArticle from "../../../store/useCreateArticlePage.js";
 import useArticle from "../../../store/useArticle";
 import useListenArticles from "../../../hooks/useListenArticles.js";
+import { useAuthContext } from "../../../context/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 const Articles = () => {
 
@@ -11,14 +13,27 @@ const Articles = () => {
     const {selectedArticle, setSelectedArticle} = useArticle();
     const {selectedCreateNewArticle, setSelectedEditArticle, setSelectedCreateNewArticle} = useCreateArticle();
     // console.log("yahhh ", conversations);
+    const {authUser} = useAuthContext();
 
     useListenArticles();
+
+    const handleClick = () => {
+        console.log(authUser);
+        if (authUser.muted) {
+            toast.error("You are muted and cannot create articles");
+            return;
+        }
+
+        setSelectedCreateNewArticle(true); 
+        setSelectedArticle(null); 
+        setSelectedEditArticle(null);
+    }
 
     return (
         <div className="pt-5 flex flex-col w-1/5">
             <div className="flex justify-center mb-5">
                 <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
-                onClick={() => {setSelectedCreateNewArticle(true); setSelectedArticle(null); setSelectedEditArticle(null);}}>
+                onClick={handleClick}>
                     Create Article
                 </button>
             </div>

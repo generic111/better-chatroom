@@ -8,26 +8,23 @@ const MuteUsers = () => {
 
     return (
         <div className="py-2 flex flex-col overflow-auto mt-10">
-            <h1 className="font-bold text-2xl">
-                Mute Users
-            </h1>
 
-            <table class="table-fixed mt-10">
+            <table className="table-fixed mt-10">
                 <thead className="mt-10">
                     <tr>
-                        <th class="w-1/3">
+                        <th className="w-1/3">
                             <div className="flex justify-start mb-10">
                                 <label className="font-bold text-2xl text-black">username</label>
                             </div>
                         </th>
-                        <th class="w-1/3">
+                        <th className="w-1/3">
 
                         <div className="flex justify-start mb-10">
                             <label className="font-bold text-2xl text-black">role</label>
                         </div>
 
                         </th>
-                        <th class="w-1/3">
+                        <th className="w-1/3">
                             <div className="flex justify-start mb-10">
                                 <label className="font-bold text-2xl text-black">Mute</label>
                             </div>
