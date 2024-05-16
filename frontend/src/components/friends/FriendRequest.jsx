@@ -8,11 +8,12 @@ const FriendRequest = ({request}) => {
     const {loading, processRequest} = useProcessFriendRequest();
 
     const sleep = ms => new Promise(r => setTimeout(r, ms));
+    const profilePic = `https://avatar.iran.liara.run/public/boy?username=${request.fullName}`;
     return (<>
         <div className={"flex gap-2 items-center rounded -2 py-1 cursor-pointer"}> 
             <div>
                 <div className="w-12 rounded-full">
-                    <img src="https://avatar.iran.liara.run/public/boy" alt="avatar"/>
+                    <img src={profilePic} alt="avatar"/>
                 </div>
             </div>
 
