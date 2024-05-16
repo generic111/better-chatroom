@@ -2,10 +2,12 @@ import { useAuthContext } from "../context/AuthContext";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import CryptoJS from "crypto-js";
+import useProfilePic from "../store/useProfilePic";
 
 const useSignin = () => {
 	const [loading, setLoading] = useState(false);
 	const { setAuthUser } = useAuthContext();
+	const { setProfilePic } = useProfilePic();
 	
 	const signin = async (username, password) => {
 		
@@ -28,6 +30,7 @@ const useSignin = () => {
 
 			localStorage.setItem("chat-user", JSON.stringify(data));
 			setAuthUser(data);
+			setProfilePic(`https://avatar.iran.liara.run/username?username=${data.fullName}`);
 		} catch (error) {
 			toast.error(error.message);
 		} finally {

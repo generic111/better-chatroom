@@ -2,6 +2,9 @@ import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../../context/AuthContext'
+import useProfilePic from '../../store/useProfilePic'
+import useSignout from '../../hooks/useSignout'
 
 // From tailwind css sample https://tailwindui.com/components/application-ui/navigation/navbars
 
@@ -9,8 +12,6 @@ var navigation = [
     
     { name: 'Chat', href: '/'},
     { name: 'Knowledge Repository', href: '/forum'},
-    { name: 'Signin', href: '/signin'},
-    { name: 'Signup', href: '/signup'},
 ]
 
 function classNames(...classes) {
@@ -22,22 +23,18 @@ export default function NavBar(user) {
 
 
     const [name, setName] = useState("");
-    const [profilePic, setProfilePic] = useState("https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80");
-
+    const {profilePic} = useProfilePic();
+    const {authUser} = useAuthContext();
+    const {loading, signout} = useSignout();
+    // console.log(profilePic)
     const navigate = useNavigate();
 
     function handleClick(name) {
-        if (!user.user && name != "Signup") {
-            setName("Signin");
-            return;
-        }
-
-        else if (user.user && (name == "Signin" || name == "Signup")) {
+        if (!authUser) {
             return;
         }
         else {
             setName(name);
-            setProfilePic(user.user.profilePic);
         }
     };
 
@@ -96,7 +93,7 @@ export default function NavBar(user) {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={profilePic}
                         alt=""
                       />
                     </Menu.Button>
@@ -114,17 +111,7 @@ export default function NavBar(user) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
+                            onClick={() => {navigate('/account');}}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
@@ -134,7 +121,7 @@ export default function NavBar(user) {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            onClick={() => {signout();}}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out

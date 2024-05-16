@@ -53,6 +53,8 @@ export const signup = async (req, res) => {
                 _id: newUser._id,
                 fullName: newUser.fullName,
                 username: newUser.username,
+                role: newUser.role,
+                muted: newUser.muted,
                 profilePic: newUser.profilePic,
             });
         }
@@ -94,6 +96,8 @@ export const signin = async (req, res) => {
 
         res.status(200).json({
             _id: user._id,
+            role: user.role,
+            muted: user.muted,
             fullName: user.fullName,
             username: user.username,
             profilePic: user.profilePic,
@@ -107,6 +111,7 @@ export const signin = async (req, res) => {
 };
 
 export const muteUser = async (req, res) => {
+    // console.log("here");
     try {
         const {username} = req.body;
 

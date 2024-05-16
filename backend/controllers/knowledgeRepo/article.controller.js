@@ -6,13 +6,16 @@ import Comment from "../../models/comment.model.js";
 export const createArticle = async (req, res) => {
     try {
         
-        const {username, title, content} = req.body;
+        const {title, content} = req.body;
+        const userId = req.user._id;
 
-        const user = await User.findOne({username});
+        const user = await User.findById(userId);
 
         const newArticle = await Article({
-            authorName: username,
+            authorName: user.username,
+            authorFullName: user.fullName,
             authorId: user._id,
+            authorRole: user.role,
             title: title,
             content: content,
         
@@ -28,7 +31,7 @@ export const createArticle = async (req, res) => {
         }
 
     } catch (error) {
-        console.log("error creating article up", error.message);
+        console.log("error creating article", error.message);
         res.status(500).json({error: "Internal server error"});
     };
 };
@@ -73,17 +76,14 @@ export const editArticle = async (req, res) => {
         const article = await Article.findById(articleId);
         const user = await User.findById(userId);
 
-        if (article.authorId != req.user._id && user.role != "staff") {
-            return res.status(401).json({error: "Unauthorized article edit attempt"});
-        }
-
         const ret = await Article.findOneAndUpdate(
             { _id: articleId }, 
             { title: title, content: content },
             { new: true }
         );
 
-        res.status(200).json(ret);
+        const articles = await Article.find({}).populate("commentList");
+        res.status(200).json(articles);
 
     } catch (error) {
         console.log("error editing article", error.message);

@@ -1,16 +1,25 @@
 import { useEffect } from "react";
 import useArticle from "../../../store/useArticle";
 import ArticleDetails from "./ArticleDetails.jsx";
-import useCreateArticle from "../../../store/useCreateArticle.js";
+import useCreateArticle from "../../../store/useCreateArticlePage.js";
 import CreateNewArticle from "./CreateNewArticle.jsx";
 import { MdOutlineArticle } from "react-icons/md";
 import Comments from "./Comments.jsx";
 import CommentInput from "./CommentInput.jsx";
+import EditArticle from "./EditArticle.jsx";
 
 
-function ContainerContent({selectedArticle, selectedCreateNewArticle}) {
+function ContainerContent({selectedArticle, selectedCreateNewArticle, selectedEditArticle}) {
 
-    if (!selectedArticle && !selectedCreateNewArticle) {
+    if (selectedEditArticle) {
+        return (
+            <div className="flex flex-col">
+                <EditArticle />
+            </div>
+        );
+    }
+    
+    else if (!selectedArticle && !selectedCreateNewArticle) {
         return (
             <div className=" flex-col m-auto py-60">
                 <div className="flex justify-center">
@@ -26,10 +35,11 @@ function ContainerContent({selectedArticle, selectedCreateNewArticle}) {
     }
     else if (selectedArticle) {
         return (
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-auto">
                 <ArticleDetails />
-                <Comments />
                 <CommentInput />
+                <Comments />
+                
             </div>
         );
     }
@@ -53,7 +63,7 @@ function ContainerContent({selectedArticle, selectedCreateNewArticle}) {
 const ArticleContainer = () => {
 
     const {selectedArticle, setSelectedArticle} = useArticle();
-    const {selectedCreateNewArticle, setSelectedCreateNewArticle} = useCreateArticle();
+    const {selectedCreateNewArticle, selectedEditArticle, setSelectedCreateNewArticle} = useCreateArticle();
   
     useEffect(() => {
         return () => setSelectedArticle(null);
@@ -67,7 +77,8 @@ const ArticleContainer = () => {
         <div className="flex flex-col w-full pt-5 pl-20">
             <ContainerContent
                 selectedArticle={selectedArticle}
-                selectedCreateNewArticle={selectedCreateNewArticle} 
+                selectedCreateNewArticle={selectedCreateNewArticle}
+                selectedEditArticle={selectedEditArticle} 
             />
             {/* <>
  

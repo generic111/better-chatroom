@@ -14,7 +14,7 @@ const useListenComments = () => {
 			setSelectedArticle([...comments, newComment]);
 		});
 
-		return () => socket?.off("newMessage");
+		return () => socket?.off("newComment");
 	}, [socket, setComments, comments]);
 };
 

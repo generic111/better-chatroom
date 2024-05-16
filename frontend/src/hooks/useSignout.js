@@ -1,10 +1,12 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import useProfilePic from "../store/useProfilePic";
 
 const useSignout = () => {
 	const [loading, setLoading] = useState(false);
 	const { setAuthUser } = useAuthContext();
+	const { setProfilePic } = useProfilePic();
 
 	const signout = async () => {
 		setLoading(true);
@@ -20,6 +22,7 @@ const useSignout = () => {
 
 			localStorage.removeItem("chat-user");
 			setAuthUser(null);
+			setProfilePic("");
 		} catch (error) {
 			toast.error(error.message);
 		} finally {

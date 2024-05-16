@@ -1,6 +1,5 @@
 import ArticleContainer from "../../components/knowledgeRepo/articles/ArticleContainer.jsx";
 import Articles from "../../components/knowledgeRepo/articles/Articles.jsx";
-import NavBar from "../homepage/NavBar.jsx";
 
 const Forum = () => {
     return (

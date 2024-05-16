@@ -15,7 +15,9 @@ export const comment = async (req, res) => {
 
         const newComment = await Comment({
             autherName: user.username,
-            authorId: user,
+            authorFullName: user.fullName,
+            authorId: user._id,
+            authorRole: user.role,
             content: comment,
         });
 
@@ -62,11 +64,6 @@ export const deleteComment = async (req, res) => {
 
         const user = await User.findById(userId);
 
-        if (user.role !== "staff") {
-            return res.status(401).json({error: "Cannot delete not staff member"});
-        }
-
-
         const {commentId, articleId} = req.body;
 
         const article = await Article.findById(articleId);
@@ -87,7 +84,9 @@ export const deleteComment = async (req, res) => {
         await Comment.deleteOne({_id: commentId});
         
 
-        res.status(200).json({message: "Comment deleted"});
+        res.status(200).json({
+            _id: commentId
+        });
 
     } catch (error) {
         console.log("error deleting comment", error.message);

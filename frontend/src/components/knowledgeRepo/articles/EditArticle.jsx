@@ -1,28 +1,31 @@
-import useComment from "../../../hooks/useComment";
 import useArticle from "../../../store/useArticle";
 import useCreateArticlePage from "../../../store/useCreateArticlePage";
-import useCreateArticle from "../../../hooks/useCreateArticle";
 import { useState } from "react";
+import useEditArticle from "../../../hooks/useEditArticle";
+import toast from "react-hot-toast";
 
-const CreateNewArticle = ({article}) => {
+
+const EditArticle = ({article}) => {
     // console.log(article);
     const {selectedArticle, setSelectedArticle} = useArticle();
-    const {selectedCreateNewArticle, setSelectedCreateNewArticle} = useCreateArticlePage();
+    const {selectedEditArticle, setSelectedEditArticle, setSelectedCreateNewArticle} = useCreateArticlePage();
 
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const {loading, createArticle} = useCreateArticle() 
-    
+    const [title, setTitle] = useState(selectedArticle.title);
+    const [content, setContent] = useState(selectedArticle.content);
+
+    const {loading, editArticle} = useEditArticle()
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const ret = await createArticle(title, content);
+        const ret = await editArticle(title, content);
         console.log(ret);
         
         if (ret) {
-            setSelectedArticle(null);
             setSelectedCreateNewArticle(null);
+            setSelectedEditArticle(null);
+            setSelectedArticle(null);
+            toast.success("Article edited successfully");
         }
         
         
@@ -32,14 +35,14 @@ const CreateNewArticle = ({article}) => {
         <div>
             <div className="flex mb-20">
                 <div className="mr-64 flex-col content-center">
-                    <label className="items-center cursor-pointer text-blue-500" onClick={() => setSelectedCreateNewArticle(null)}>
+                    <label className="items-center cursor-pointer text-blue-500" onClick={() => setSelectedEditArticle(null)}>
                         cancel
                     </label>
                 </div>
 
                 <div className="mx-64 px-24 justify-self-center">
                     <h1 className="text-4xl font-bold">
-                        New Article
+                        Edit Article
                     </h1>
                 </div>
                 
@@ -74,4 +77,4 @@ const CreateNewArticle = ({article}) => {
     </>);
 };
 
-export default CreateNewArticle;
+export default EditArticle;
