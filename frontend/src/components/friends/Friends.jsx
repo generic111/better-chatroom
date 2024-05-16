@@ -40,19 +40,6 @@ const Friends = () => {
     return (
         <div className="border-r border-slate-500 p-4 flex flex-col"> 
             <SearchInput />
-
-            {/* <div className="flex justify-center mb-5">
-                <button className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"}
-                onClick={handleClick}>
-                    Create Conversation
-                </button>
-            </div>
-            <div className="flex justify-center mb-5">
-                <Link to="/signin" className="text-blue-600">
-                    Don't have an account? Sign Up
-                </Link>
-            </div> */}
-
             <div className = 'divider px-3'></div>
             <Conversations /> 
             <SignOutButton /> 
