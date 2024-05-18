@@ -2,6 +2,7 @@ import FriendRequest from "../../models/friendRequestsModel.js";
 import User from "../../models/user.model.js";
 import FriendsList from "../../models/friendsList.model.js";
 import Conversation from "../../models/conversation.model.js";
+import { getReceiverSocketId, io } from "../../socket/socket.js";
 
 export const sendFriendRequest = async (req, res) => {
     // console.log("sendFriendRequest")
@@ -234,19 +235,25 @@ export const deleteFriend = async (req, res) => {
         friendsListSend.members.splice(indexReciever, 1);
 
         // remove conversations from these friends 
-        let conversation1 = await Conversation.findOne({
-            members: [sender._id, receiver._id]
-        });
+        // let conversation1 = await Conversation.findOne({
+        //     members: [sender._id, receiver._id]
+        // });
 
-        let conversation2 = await Conversation.findOne({
-            members: [receiver._id, sender._id]
-        });
+        // let conversation2 = await Conversation.findOne({
+        //     members: [receiver._id, sender._id]
+        // });
         
-        let convo = conversation1 ? conversation1 : conversation2;
+        // let convo = conversation1 ? conversation1 : conversation2;
 
-        if (convo) {
-            convo.messages = [];
-            convo.save();
+        // if (convo) {
+        //     convo.messages = [];
+        //     convo.save();
+        // }
+
+        const receiverSocketId = getReceiverSocketId(receiver._id);
+
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("deleteFriend", sender._id);  
         }
 
         await Promise.all([

@@ -1,9 +1,12 @@
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import useConversation from "../store/useConversation";
 
 const useGetChats = () => {
 	const [loading, setLoading] = useState(false);
-	const [chats, setChats] = useState([]);
+	// const [chats, setChats] = useState([]);
+
+    const {chats, setChats} = useConversation();
 	// console.log("here");
 	useEffect(() => { 
 		const getChats = async () => {

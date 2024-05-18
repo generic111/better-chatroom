@@ -4,7 +4,7 @@ import Chat from "./Chat.jsx";
 const Chats = () => {
 
     const {loading, chats} = useGetChats();
-    console.log("yahhh ", chats);
+    // console.log("yahhh ", chats);
 
     return (
         <div className="py-2 flex flex-col overflow-auto">

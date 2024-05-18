@@ -3,6 +3,10 @@ import { create } from 'zustand';
 
 
 const useConversation = create((set) => ({
+    chats: [],
+    setChats: (chats) => set({chats}),
+    conversations: [],
+    setConversations: (conversations) => set({conversations}),
     isChatroom: null,
     setIsChatroom: (isChatroom) => set({isChatroom}),
     selectedConversation : null,

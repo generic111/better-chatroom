@@ -82,18 +82,16 @@ export const sendChatMessage = async (req, res) => {
 
 export const getChatMessages = async (req, res) => {
     try {
-        const {name} = req.body;
+        const {id: chatId} = req.params;
+        const chat = await Chatroom.findById(chatId).populate("messages");
 
-        const chat = await Chatroom.findOne({
-            name: name,
-        }).populate("messages");
-
+        
         if (!chat) {
             return res.status(200).json([]);
         }
 
         const messages = chat.messages;
-
+        // console.log("chat", messages);
         res.status(200).json(messages);
 
     } catch (error) {
