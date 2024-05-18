@@ -31,13 +31,16 @@ const useSendMessage = () => {
 			});
 
 			let data = await res.json();
-			const content = data['newMessage'];
-			content.content = decrypt(content.content, key);
 
 			if (data.error) {
                 toast.error(data.error);
 				return;
             }
+			
+			const content = data['newMessage'];
+			content.content = decrypt(content.content, key);
+
+
 			setMessages([...messages, content]);
 		} catch (error) {
 			toast.error(error.message);
