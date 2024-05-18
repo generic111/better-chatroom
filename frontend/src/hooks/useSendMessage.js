@@ -35,7 +35,8 @@ const useSendMessage = () => {
 			content.content = decrypt(content.content, key);
 
 			if (data.error) {
-                throw new Error(data.error);
+                toast.error(data.error);
+				return;
             }
 			setMessages([...messages, content]);
 		} catch (error) {
@@ -47,7 +48,37 @@ const useSendMessage = () => {
 		}
 	};
 
-	return {sendMessage, loading};
+	const sendChatMessage = async (message) => {
+		setLoading(true);
+
+		try {
+			const res = await fetch(`/api/chat/send/${selectedConversation._id}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ 
+					message: message, 
+				}),
+			});
+
+			let data = await res.json();
+
+			if (data.error) {
+                toast.error(data.error);
+				return;
+            }
+			setMessages([...messages, data['newMessage']]);
+		} catch (error) {
+			toast.error(error.message);
+
+		} finally {
+			setLoading(false);
+
+		}
+	};
+
+	return {sendMessage, sendChatMessage, loading};
     
 };
 export default useSendMessage;

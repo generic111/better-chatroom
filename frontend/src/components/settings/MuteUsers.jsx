@@ -7,7 +7,7 @@ const MuteUsers = () => {
     // console.log("yahhh ", conversations);
 
     return (
-        <div className="py-2 flex flex-col overflow-auto mt-10">
+        <div className="py-2 flex flex-col mt-10">
 
             <table className="table-fixed mt-10">
                 <thead className="mt-10">

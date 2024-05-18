@@ -2,6 +2,7 @@ import express from "express";
 import { signup, signin, signout, muteUser, unmuteUser } from "../controllers/chat/auth.controller.js";
 import {body} from "express-validator";
 import protectRoute from "../middleware/protectRoute.js";
+import { changePassword } from "../controllers/chat/auth.controller.js";
 
 const router = express.Router();
 
@@ -21,5 +22,6 @@ router.post("/signup", [
 
 router.post("/muteUser", protectRoute, muteUser);
 router.post("/unmuteUser", protectRoute, unmuteUser);
+router.post("/changePassword", protectRoute, changePassword);
 
 export default router;

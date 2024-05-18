@@ -18,6 +18,13 @@ export const getReceiverSocketId = (receiverId) => {
     return userSocketMap[receiverId];
 }
 
+export const getAll = () => {
+    var values = Object.keys(userSocketMap).map(function(key){
+        return userSocketMap[key];
+    });
+    return values;
+} 
+
 const userSocketMap = {}; 
 
 io.on('connection', (socket) => {

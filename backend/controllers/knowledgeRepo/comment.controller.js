@@ -1,6 +1,7 @@
 import User from "../../models/user.model.js";
 import Article from "../../models/article.model.js";
 import Comment from "../../models/comment.model.js";
+import { getAll, io } from "../../socket/socket.js";
 
 
 export const comment = async (req, res) => {
@@ -12,6 +13,11 @@ export const comment = async (req, res) => {
         const article = await Article.findById(articleId);
 
         const user = await User.findById(userId);
+        
+        if (user.muted) {
+            res.status(400).json({error: "User is muted"});
+            return;
+        }
 
         const newComment = await Comment({
             autherName: user.username,
@@ -28,6 +34,14 @@ export const comment = async (req, res) => {
                 newComment.save(),
                 article.save(),
             ]);
+
+            const receiverSocketId = getAll();
+
+            if (receiverSocketId) {
+                for (let i = 0; i < receiverSocketId.length; i++) {
+                    io.to(receiverSocketId[i]).emit("newComment", newComment); 
+                } 
+            }
 
             res.status(201).json(newComment);
         }
@@ -83,7 +97,13 @@ export const deleteComment = async (req, res) => {
 
         await Comment.deleteOne({_id: commentId});
         
+        const receiverSocketId = getAll();
 
+        if (receiverSocketId) {
+            for (let i = 0; i < receiverSocketId.length; i++) {
+                io.to(receiverSocketId[i]).emit("deleteComment", commentId); 
+            } 
+        }
         res.status(200).json({
             _id: commentId
         });

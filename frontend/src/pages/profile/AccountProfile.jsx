@@ -8,7 +8,7 @@ const AccountProfile = () => {
 
     const profilePic = `https://avatar.iran.liara.run/username?username=${authUser.fullName}`
     return (
-        <div className="p-5 shadow-md backdrop-filter backdrop-blur-lg bg-opacity-25 h-full"> 
+        <div className="p-5 shadow-md backdrop-filter backdrop-blur-lg bg-opacity-25 h-full overflow-y-scroll pb-20"> 
 
             <div className="flex">
                 <div className="flex">

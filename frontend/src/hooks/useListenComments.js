@@ -11,10 +11,20 @@ const useListenComments = () => {
 
 		socket?.on("newComment", (newComment) => {
 
-			setSelectedArticle([...comments, newComment]);
+			setComments([...comments, newComment]);
 		});
 
 		return () => socket?.off("newComment");
+	}, [socket, setComments, comments]);
+
+	useEffect(() => {
+
+		socket?.on("deleteComment", (id) => {
+
+			setComments(comments.filter((c) => c._id !== id));
+		});
+
+		return () => socket?.off("deleteComment");
 	}, [socket, setComments, comments]);
 };
 

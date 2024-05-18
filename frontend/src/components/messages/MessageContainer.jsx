@@ -1,12 +1,37 @@
-import Message from "./Message";
 import Messages from "./Messages";
 import MessageInput from "./MessageInput";
 import useConversation from "../../store/useConversation";
 import { useEffect } from "react";
+import ChatMessages from "./ChatMessages";
+
+function ContainerContent({selectedConversation, isChatroom}) {
+    if (!selectedConversation) {
+        return (
+            <div></div>
+        );
+    }
+
+    else if (!isChatroom) {
+        
+        return (
+            <>
+                <Messages />
+                <MessageInput />
+            </>
+        )
+    }
+    
+    return (
+        <>
+            <ChatMessages />
+            <MessageInput />
+        </>
+    );
+}
 
 const MessageContainer = () => {
 
-    const {selectedConversation, setSelectedConversation} = useConversation()
+    const {selectedConversation, setSelectedConversation, isChatroom} = useConversation()
   
     useEffect(() => {
         return () => setSelectedConversation(null);
@@ -20,13 +45,7 @@ const MessageContainer = () => {
                 <span className="text-black text-lg">{!selectedConversation ? "No one selected": selectedConversation.username}</span>
             </div>
 
-			{!selectedConversation ? (<div> </div>) : 
-            (
-				<>
-					<Messages />
-					<MessageInput />
-				</>
-			)}
+			<ContainerContent selectedConversation={selectedConversation} isChatroom={isChatroom} />
 		</div>
 	);
 }

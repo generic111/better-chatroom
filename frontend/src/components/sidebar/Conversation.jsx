@@ -5,7 +5,7 @@ import useSendDeleteRequest from '../../hooks/useSendDeleteRequest.js';
 
 const Conversation = ({conversation}) => {
 
-    const {selectedConversation, setSelectedConversation} = useConversation();
+    const {selectedConversation, setSelectedConversation, setIsChatroom} = useConversation();
 
     const isSelected = selectedConversation?._id === conversation._id;
     const {onlinePeeps} = useSocketContext();
@@ -16,13 +16,13 @@ const Conversation = ({conversation}) => {
 
         console.log(conversation.username);
         sendRequest(conversation.username)
-
+        setSelectedConversation(conversation);
+        setIsChatroom(null);
     }
-
     return (<>
 			<div className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
 				    ${isSelected ? "bg-sky-500" : ""}`}
-                onClick={() => setSelectedConversation(conversation)}> 
+                onClick={handleClick}> 
             <div className={`avatar ${isOnline ? "online" : ""}`}>
                 <div className="w-12 rounded-full">
                     <img src={`https://avatar.iran.liara.run/public/boy?username=${conversation.fullName}`} alt='user avatar' />

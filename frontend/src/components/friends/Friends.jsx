@@ -1,6 +1,10 @@
 import Conversations from "../sidebar/Conversations.jsx";
 import SignOutButton from "../sidebar/SignOutButton.jsx";
 import SearchInput from "../sidebar/SearchInput.jsx";
+import Chats from "../sidebar/Chats.jsx";
+import DeleteFriend from "../sidebar/DeleteFriend";
+
+
 
 const Friends = () => {
 
@@ -9,6 +13,7 @@ const Friends = () => {
             <SearchInput />
             <div className = 'divider px-3'></div>
             <Conversations /> 
+            <Chats />
             <SignOutButton /> 
         </div>
     );
