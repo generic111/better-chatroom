@@ -1,6 +1,7 @@
 import User from "../../models/user.model.js";
 import Article from "../../models/article.model.js";
 import Comment from "../../models/comment.model.js";
+import { getAll, io } from "../../socket/socket.js";
 
 
 export const createArticle = async (req, res) => {
@@ -10,6 +11,11 @@ export const createArticle = async (req, res) => {
         const userId = req.user._id;
 
         const user = await User.findById(userId);
+
+        if (user.muted) {
+            res.status(400).json({error: "User is muted"});
+            return;
+        }
 
         const newArticle = await Article({
             authorName: user.username,
@@ -23,6 +29,14 @@ export const createArticle = async (req, res) => {
 
         if (newArticle) {
             await newArticle.save();
+            const receiverSocketId = getAll();
+
+            if (receiverSocketId) {
+                for (let i = 0; i < receiverSocketId.length; i++) {
+                    io.to(receiverSocketId[i]).emit("newArticle", newArticle); 
+                } 
+            }
+
             res.status(201).json(newArticle);
         }
 
@@ -59,6 +73,14 @@ export const deleteArticle = async (req, res) => {
         }
 
         const ret = await Article.deleteOne({_id: articleId});
+
+        const receiverSocketId = getAll();
+
+        if (receiverSocketId) {
+            for (let i = 0; i < receiverSocketId.length; i++) {
+                io.to(receiverSocketId[i]).emit("deleteArticle", article._id); 
+            } 
+        }
         res.status(200).json(ret);
 
     } catch (error) {

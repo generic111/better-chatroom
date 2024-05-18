@@ -18,7 +18,7 @@ const Articles = () => {
     useListenArticles();
 
     const handleClick = () => {
-        console.log(authUser);
+        // console.log(authUser);
         if (authUser.muted) {
             toast.error("You are muted and cannot create articles");
             return;
@@ -44,7 +44,7 @@ const Articles = () => {
 
             <div>
 
-                {articles.map((article) => (
+                {articles.toReversed().map((article) => (
                     <Article key = {article._id} article={article}/>
                 ))}
             </div>

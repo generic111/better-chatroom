@@ -25,7 +25,8 @@ const useComment = () => {
 			let data = await res.json();
 
 			if (data.error) {
-                throw new Error(data.error);
+                toast.error(data.error);
+				return true;
             }
 			setComments([...comments, data]);
 		} catch (error) {

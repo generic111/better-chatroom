@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const messageSchema = new mongoose.Schema({
+const chatMessageSchema = new mongoose.Schema({
     senderName: {
         type: String,
         required: true,
@@ -10,21 +10,17 @@ const messageSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    receiveId: {
+    roomId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Chatroom",
         required: true,
     },
     content: {
         type: String,
         required: true,
     },
-    hmac: {
-        type: String,
-        required: true,
-    }
 }, {timestamps: true});
 
-const Message = mongoose.model("Message", messageSchema);
+const ChatMessage = mongoose.model("ChatMessage", chatMessageSchema);
 
-export default Message;
+export default ChatMessage;

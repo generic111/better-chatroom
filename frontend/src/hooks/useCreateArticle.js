@@ -23,8 +23,9 @@ const useCreateArticle = () => {
 			const data = await res.json();
 
 			if (data.error) {
-				throw new Error(data.error);
-                return false
+
+				toast.error(data.error);
+                return true;
 			}
             
             setArticles([...articles, data]);
@@ -33,7 +34,7 @@ const useCreateArticle = () => {
 		} finally {
 			setLoading(false);
 		}
-
+		toast.success("Article created successfully");
         return true;
 	};
 

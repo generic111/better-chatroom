@@ -2,6 +2,7 @@ import Conversation from "../../models/conversation.model.js";
 import Message from "../../models/message.model.js";
 import { getReceiverSocketId, io } from "../../socket/socket.js";
 import { matchedData, validationResult } from "express-validator";
+import User from "../../models/user.model.js";
 
 export const sendMessage = async (req, res) => {
     try {
@@ -9,6 +10,13 @@ export const sendMessage = async (req, res) => {
         const {message: message, hmac: hmac} = req.body;
         const {id: receiveId} = req.params;
         const senderId = req.user._id;
+        
+        const user = await User.findById(senderId);
+
+        if (user.muted) { 
+            res.status(400).json({error: "User is muted"});
+            return;
+        }
 
         const errors = validationResult(req);
 
@@ -33,6 +41,7 @@ export const sendMessage = async (req, res) => {
         };
 
         const newMessage = new Message({
+            senderName: user.username,
             senderId: senderId,
             receiveId: receiveId,
             content: message,

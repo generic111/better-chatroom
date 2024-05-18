@@ -3,6 +3,7 @@ import useArticle from "../../../store/useArticle";
 import { useAuthContext } from "../../../context/AuthContext";
 import useCreateArticlePage from "../../../store/useCreateArticlePage";
 import toast from "react-hot-toast";
+import useListenComments from "../../../hooks/useListenComments";
 
 const ArticleDetails = ({article}) => {
 
@@ -10,6 +11,8 @@ const ArticleDetails = ({article}) => {
     const {deleteArticle} = useDeleteArticle();
     const {authUser} = useAuthContext();
     const {selectedEditArticle, setSelectedEditArticle, setSelectedCreateNewArticle} = useCreateArticlePage();
+
+    useListenComments();
 
     const handleDelete = async (e) => {
         e.preventDefault();

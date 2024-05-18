@@ -1,15 +1,27 @@
 import { useState } from "react";
 import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
+import useConversation from "../../store/useConversation";
 
 const MessageInput = () => {
 
     const [message, setMessage] = useState("");
-    const {loading, sendMessage} = useSendMessage();
+    const {loading, sendMessage, sendChatMessage} = useSendMessage();
+    const {selectedConversation, isChatroom} = useConversation();
 
     const submitFunc = async (e) => {
         e.preventDefault();
         if (!message) return;
+        
+
+        
+        if (isChatroom) {
+            console.log(isChatroom);
+            await sendChatMessage(message, selectedConversation._id);
+            setMessage("");
+            return;
+        }
+
         await sendMessage(message);
 
         setMessage("");

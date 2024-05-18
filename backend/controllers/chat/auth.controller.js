@@ -152,3 +152,26 @@ export const unmuteUser = async (req, res) => {
         res.status(500).json({error: "Internal server error"});
     }
 };
+
+export const changePassword = async (req, res) => {
+    try {
+        const {newPassword, confirmPassword} = req.body;
+
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({error: "Passwords do not match"});
+        }
+
+        const user = await User.findById(req.user._id);
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({message: "Password changed successfully"});
+    } catch (error) {
+        console.log("error changing password", error.message);
+        res.status(500).json({error: "Internal server error"});
+    }
+};

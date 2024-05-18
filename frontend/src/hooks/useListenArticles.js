@@ -11,10 +11,20 @@ const useListenArticles = () => {
 
 		socket?.on("newArticle", (newArticle) => {
 
-			setSelectedArticle([...articles, newArticle]);
+			setArticles([...articles, newArticle]);
 		});
 
 		return () => socket?.off("newArticle");
+	}, [socket, setArticles, articles]);
+
+	useEffect(() => {
+
+		socket?.on("deleteArticle", (id) => {
+
+			setArticles(articles.filter((c) => c._id !== id));
+		});
+
+		return () => socket?.off("deleteArticle");
 	}, [socket, setArticles, articles]);
 };
 

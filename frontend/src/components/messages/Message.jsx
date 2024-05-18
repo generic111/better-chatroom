@@ -7,8 +7,9 @@ const Message = ({message}) => {
     const {selectedConversation} = useConversation();
 
     const whoMe = message.senderId === authUser._id;
+
     const bubbleColour = whoMe ? 'bg-blue-500' : ""
-    const profilePic = whoMe ? `https://avatar.iran.liara.run/public/boy?username=${authUser.fullName}` : `https://avatar.iran.liara.run/public/boy?username=${selectedConversation?.fullName}`;
+    const profilePic = whoMe ? `https://avatar.iran.liara.run/username?username=${authUser.fullName}` : `https://avatar.iran.liara.run/username?username=${message?.senderName}`;
 
     const chatClassDir = whoMe ? 'chat-end' : 'chat-start';
 
@@ -20,7 +21,7 @@ const Message = ({message}) => {
                 </div>
             </div>
             <div className="chat-name">
-                {whoMe ? 'You' : selectedConversation.fullName}    
+                {whoMe ? authUser.username : message.senderName}    
             </div>
 
             <div className={`chat-bubble text-white ${bubbleColour}`}>
